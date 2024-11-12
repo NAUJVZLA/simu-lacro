@@ -4,11 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
-
-
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ILoginRequest } from "@/app/core/application/ports/auth/login-request.dto";
+import { ILoginRequest } from "@/app/core/application/dto/auth/login-request.dto";
 import { FormField } from "../../molecules/common/FormField";
 
 const loginSchema = yup.object().shape({
