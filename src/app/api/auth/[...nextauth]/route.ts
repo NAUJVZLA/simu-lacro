@@ -56,9 +56,9 @@ export const authOptions: NextAuthOptions = {
             email: loginRequest.email,
             id: loginRequest.email,
             name: loginRequest.email,
-            token: response.access_token,
-            role: response.data.role,
-            photo: response.data.photo,
+            token: response.data.access_token,
+            role: response.data.user.role,
+            photo: response.data.user.photo,
           } as AuthUser;
         } catch (error) {
           console.log(error);
@@ -84,7 +84,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       const customSession = session as CustomSession;
-      customSession.user.id = (token as AuthToken).id;
+      customSession.user.id = token.id as string;
       customSession.user.token = token.token as string;
       customSession.user.name = token.name as string;
       customSession.user.role = token.role as string;
