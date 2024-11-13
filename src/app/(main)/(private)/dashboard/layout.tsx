@@ -1,5 +1,5 @@
 import React from "react";
-import AuthGuard from "../guard/AuthGuard";
+import AuthGuard from "./guard/AuthGuard";
 
 export default function PrivateLayout({
   children,

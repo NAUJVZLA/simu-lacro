@@ -1,5 +1,5 @@
 import { ILoginRequest } from "@/app/core/application/dto";
-import { AuthService } from "@/app/infrastucture/services/auth.service";
+import { AuthService } from "@/app/infrastucture/service/auth.service";
 import NextAuth, { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -31,17 +31,17 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Correo Electrónico", type: "text" },
+        email: { label: "Correo Electrónico", type: "text" },
         password: { label: "Contraseña", type: "password" },
       },
       authorize: async (credentials) => {
-        if (!credentials?.password || !credentials.username) {
+        if (!credentials?.password || !credentials.email) {
           console.error("Credenciales faltantes");
           return null;
         }
         const loginRequest: ILoginRequest = {
           password: credentials.password,
-          userName: credentials.username,
+          email: credentials.email,
         };
 
         try {
@@ -49,10 +49,10 @@ export const authOptions: NextAuthOptions = {
           const response = await authService.login(loginRequest);
 
           return {
-            email: loginRequest.userName,
-            id: loginRequest.userName,
-            name: loginRequest.userName,
-            token: response.token,
+            email: loginRequest.email,
+            id: loginRequest.email,
+            name: loginRequest.email,
+            token: response.access_token,
           } as AuthUser;
         } catch (error) {
           console.log(error);
@@ -83,5 +83,5 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-export const GET = NextAuth(authOptions);
+// export const GET = NextAuth(authOptions);
 export const POST = NextAuth(authOptions);

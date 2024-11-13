@@ -1,4 +1,5 @@
 export interface ILoginResponse {
+    access_token: string;
     statusCode: number;
     message:    string;
     data:       Data;

@@ -2,7 +2,7 @@ import { authOptions, CustomSession } from "@/app/api";
 import { getServerSession } from "next-auth/next";
 
 const defaultBaseUrl =
-  "https://communnityvolunteering-production.up.railway.app/api/v1";
+  "https://communnityvolunteering-production.up.railway.app/api/v1/auth/login";
 
 export class HttpClient {
   private baseUrl: string;
