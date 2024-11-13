@@ -6,6 +6,8 @@ export interface ILoginResponse {
 }
 
 export interface Data {
+    photo: string;
+    role: string;
     access_token: string;
     user:         User;
 }

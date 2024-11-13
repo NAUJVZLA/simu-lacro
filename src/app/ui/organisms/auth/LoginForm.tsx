@@ -1,5 +1,4 @@
 "use client";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -33,12 +32,11 @@ export const LoginForm = () => {
     resolver: yupResolver(loginSchema),
   });
   const handleLogin = async (data: ILoginRequest) => {
-    console.log(data);
-    //SERVICE LOGIN
+  
     try {
       const result = await signIn("credentials", {
         redirect: false,
-        emai: data.email,
+        username: data.email,
         password: data.password,
       });
 
@@ -88,6 +86,6 @@ export const LoginForm = () => {
     </form>
   );
 };
-function handleError(arg0: any) {
+function handleError(arg: any) {
   throw new Error("Function not implemented.");
 }

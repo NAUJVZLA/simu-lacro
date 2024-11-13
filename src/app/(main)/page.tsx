@@ -4,7 +4,7 @@ import { Button } from "../ui/atoms/button";
 
 export default function Component() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white">
       <nav className="flex justify-between items-center px-6 py-4">
         <Link href="/" className="text-blue-600 text-xl font-semibold">
           VolunteerConnect

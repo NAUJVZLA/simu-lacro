@@ -1,1 +1,1 @@
-export * from './[...nextauth]/route';
+export * from "./auth/[...nextauth]/route";

@@ -2,7 +2,7 @@ import { authOptions, CustomSession } from "@/app/api";
 import { getServerSession } from "next-auth/next";
 
 const defaultBaseUrl =
-  "https://communnityvolunteering-production.up.railway.app/api/v1/auth/login";
+  "https://communnityvolunteering-production.up.railway.app/api/v1";
 
 export class HttpClient {
   private baseUrl: string;
@@ -28,9 +28,12 @@ export class HttpClient {
   private async handleResponse(response: Response) {
     if (!response.ok) {
       const errorData = await response.json();
+      console.log("error: ", errorData);
       throw errorData;
     }
-    return await response.json();
+    const data = await response.json();
+    console.log(data)
+    return data;
   }
 
   async get<T>(url: string): Promise<T> {
@@ -54,6 +57,7 @@ export class HttpClient {
 
   async post<T, B>(url: string, body: B): Promise<T> {
     const headers = await this.getHeader();
+    console.log("POST", url, headers, body);
     const response = await fetch(`${this.baseUrl}/${url}`, {
       headers: headers,
       method: "POST",
