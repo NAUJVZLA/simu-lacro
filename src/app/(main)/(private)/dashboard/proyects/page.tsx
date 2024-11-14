@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 
 import {
@@ -16,13 +16,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/app/ui/organisms/dropdown-menu";
 import { Download, Plus, ChevronDown } from "lucide-react";
 import { Input } from "@/app/ui/atoms/input";
 import { Button } from "@/app/ui/atoms/button";
 
 export default function Component() {
   const { data: session } = useSession();
+
+  const handleLogout = () => {
+    signOut();
+  };
 
   // Accede a los datos de usuario dentro de session.user
 
@@ -35,11 +39,7 @@ export default function Component() {
             <span className="text-gray-500">Dashboard de Proyectos</span>
           </div>
           <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
+            <Button size="sm" className="flex items-center gap-2">
               <Download className="h-4 w-4" />
               Descargar Reporte
             </Button>
@@ -47,13 +47,17 @@ export default function Component() {
               <Plus className="h-4 w-4" />
               Nuevo Proyecto
             </Button>
-
             <Avatar src={session?.user.photo} />
-
             <DropdownMenu>
+              <h4>{session?.user.role}</h4>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-2">
-                  María García
+                <Button
+                  onClick={handleLogout}
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2"
+                >
+                  <h1>{session?.user.email}</h1>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -67,7 +71,7 @@ export default function Component() {
       </header>
 
       <div className="flex">
-        <aside className="w-64 bg-gray-100 min-h-screen p-4">
+        <aside className="w-60 bg-gray-100 min-h-screen p-4">
           <nav className="space-y-2">
             <a
               href="#"
@@ -76,7 +80,7 @@ export default function Component() {
               Proyectos
             </a>
             <a
-              href="#"
+              onClick={handleLogout}
               className="block px-4 py-2 rounded hover:bg-gray-200 text-gray-700"
             >
               Cerrar Sesión
@@ -131,7 +135,7 @@ export default function Component() {
                   type="search"
                 />
               </div>
-              {/* <Table>
+              <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Título</TableHead>
@@ -219,7 +223,7 @@ export default function Component() {
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </Table> */}
+              </Table>
             </div>
           </div>
         </main>

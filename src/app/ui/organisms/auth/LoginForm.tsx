@@ -32,7 +32,6 @@ export const LoginForm = () => {
     resolver: yupResolver(loginSchema),
   });
   const handleLogin = async (data: ILoginRequest) => {
-  
     try {
       const result = await signIn("credentials", {
         redirect: false,
@@ -47,7 +46,7 @@ export const LoginForm = () => {
         handleError(JSON.parse(result.error));
         return;
       }
-      router.push("/dashboard/services");
+      router.push("/dashboard/proyects");
     } catch (error) {
       console.log(error);
     }
