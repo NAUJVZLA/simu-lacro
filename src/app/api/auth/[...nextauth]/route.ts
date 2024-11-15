@@ -1,6 +1,5 @@
 import { ILoginRequest } from "@/app/core/application/dto";
 import { AuthService } from "@/app/infrastucture/service/auth.service";
-import { console } from "inspector";
 import NextAuth, { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 

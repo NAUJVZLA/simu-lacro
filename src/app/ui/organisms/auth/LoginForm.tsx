@@ -46,7 +46,7 @@ export const LoginForm = () => {
         handleError(JSON.parse(result.error));
         return;
       }
-      router.push("/dashboard/proyects");
+      router.push("/dashboard/projects");
     } catch (error) {
       console.log(error);
     }

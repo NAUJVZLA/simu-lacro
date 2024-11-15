@@ -1,4 +1,4 @@
-export interface IProyectsResponse {
+export interface IResponseProjects {
   statusCode: number;
   message: string;
   data: Datum[];
@@ -12,7 +12,7 @@ export interface Datum {
   startDate: string;
   endDate: string;
   isActive: boolean;
-  organizer: string;
+  organizer: Organizer;
 }
 
 export interface Organizer {

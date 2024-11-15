@@ -1,78 +1,93 @@
-import { authOptions, CustomSession } from "@/app/api";
+import { authOptions, CustomSession } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
-const defaultBaseUrl =
-  "https://communnityvolunteering-production.up.railway.app/api/v1";
+const defaultBaseUrl = "https://communnityvolunteering-production.up.railway.app/api/v1";
 
 export class HttpClient {
-  private baseUrl: string;
+    private baseUrl: string;
 
-  constructor(baseUrl?: string) {
-    this.baseUrl = baseUrl || defaultBaseUrl;
-  }
-
-  private async getHeader() {
-    const headers: Record<string, string> = {
-      "Content-Type": "application/json",
-    };
-
-    // Obtiene la sesión actual para verificar si está autenticado
-    const session = (await getServerSession(authOptions)) as CustomSession;
-    if (session && session.user.token) {
-      headers["Authorization"] = `Bearer ${session.user.token}`;
+    constructor(baseUrl?: string) {
+        this.baseUrl = baseUrl || defaultBaseUrl;
     }
 
-    return headers;
-  }
+    private async getHeader(authRequired: boolean = true): Promise<Record<string, string>> {
+        const headers: Record<string, string> = {
+            "Content-Type": "application/json",
+        };
 
-  private async handleResponse(response: Response) {
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log("error: ", errorData);
-      throw errorData;
+        if (authRequired) {
+            try {
+                const session = await getServerSession(authOptions) as CustomSession;
+                if (session && session.user.token) {
+                    headers["Authorization"] = `Bearer ${session.user.token}`;
+                }
+            } catch (error) {
+                console.error("Failed to get session:", error);
+            }
+        }
+
+        return headers;
     }
-    const data = await response.json();
-    console.log(data)
-    return data;
-  }
 
-  async get<T>(url: string): Promise<T> {
-    const headers = await this.getHeader();
-    const response = await fetch(`${this.baseUrl}/${url}`, {
-      headers: headers,
-      method: "GET",
-      cache: "no-store",
-    });
-    return this.handleResponse(response);
-  }
+    private async handleResponse(response: Response) {
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw errorData;
+        }
+        return await response.json();
+    }
 
-  async delete<T>(url: string): Promise<T> {
-    const headers = await this.getHeader();
-    const response = await fetch(`${this.baseUrl}/${url}`, {
-      headers: headers,
-      method: "DELETE",
-    });
-    return this.handleResponse(response);
-  }
+    async get<T>(url: string): Promise<T> {
+        try {
+            const response = await fetch(`${this.baseUrl}/${url}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
-  async post<T, B>(url: string, body: B): Promise<T> {
-    const headers = await this.getHeader();
-    console.log("POST", url, headers, body);
-    const response = await fetch(`${this.baseUrl}/${url}`, {
-      headers: headers,
-      method: "POST",
-      body: JSON.stringify(body),
-    });
-    return this.handleResponse(response);
-  }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
-  async put<T, B>(url: string, body: B): Promise<T> {
-    const headers = await this.getHeader();
-    const response = await fetch(`${this.baseUrl}/${url}`, {
-      headers: headers,
-      method: "PUT",
-      body: JSON.stringify(body),
-    });
-    return this.handleResponse(response);
-  }
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching data from server:", error);
+            throw error;
+        }
+    }
+
+    async delete<T>(url: string, authRequired: boolean = true): Promise<T> {
+        const headers = await this.getHeader(authRequired);
+        const response = await fetch(`${this.baseUrl}/${url}`, {
+            headers: headers,
+            method: "DELETE",
+        });
+        return this.handleResponse(response);
+    }
+
+    async post<T, B>(url: string, body: B, authRequired: boolean = true): Promise<T> {
+        const headers = await this.getHeader(authRequired);
+    
+        if (body instanceof FormData) {
+            delete headers["Content-Type"];
+        }
+    
+        const response = await fetch(`${this.baseUrl}/${url}`, {
+            headers: headers,
+            method: "POST",
+            body: body instanceof FormData ? body : JSON.stringify(body),
+        });
+    
+        return this.handleResponse(response);
+    }
+    
+    
+    async put<T, B>(url: string, body: B, authRequired: boolean = true): Promise<T> {
+        const headers = await this.getHeader(authRequired);
+        const response = await fetch(`${this.baseUrl}/${url}`, {
+            headers: headers,
+            method: "PUT",
+            body: JSON.stringify(body),
+        });
+        return this.handleResponse(response);
+    }
 }
