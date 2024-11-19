@@ -12,7 +12,7 @@ export const LoginTemplate = () => {
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <LoginForm />
         <div className="text-center">
-          <p className="text-sky-500">⚠️ ¿Olvidaste tu contraseña?</p>
+          <p className="text-sky-500"> ¿Olvidaste tu contraseña?</p>
           <p>
             ¿No tienes cuenta?
             <span className="text-sky-500"> Regístrate aquí </span>
