@@ -1,8 +1,7 @@
-import { ProjectsService } from "@/app/infrastucture/service/project.service";
-import DashboardCards from "@/app/ui/organisms/common/DashboardCards";
-import DashboardTopNavBar from "@/app/ui/organisms/common/DashboardTopNavBar";
-
-import TableDashboardClient from "@/app/ui/organisms/common/TableDashboard";
+import DashboardTopNavBar from "@/ui/organisms/common/DashboardTopNavBar";
+import DashboardCards from "@/ui/organisms/common/DashboardCards"; // Importa tu componente de tarjetas
+import TableDashboardClient from "@/ui/organisms/common/TableDashboard";
+import { ProjectsService } from "@/app/infrastructure/services/project.service";
 import React from "react";
 
 const projectsService = new ProjectsService();

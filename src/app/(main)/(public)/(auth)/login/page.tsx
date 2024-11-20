@@ -1,9 +1,10 @@
-
-import { LoginTemplate } from '@/app/ui/template'
-import React from 'react'
+import { LoginTemplate } from "@/ui/template";
+import React from "react";
 
 export default function LoginPage() {
-    return (
-        <LoginTemplate />
-    )
+  return (
+    <div className="main-background">
+      <LoginTemplate />
+    </div>
+  );
 }

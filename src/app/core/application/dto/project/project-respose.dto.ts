@@ -1,11 +1,11 @@
-export interface IResponseProjects {
+export interface IResponsProjects {
     statusCode: number;
     message:    string;
-    data:       Datum[];
+    data:       IProject[];
     metadata:   Metadata;
 }
 
-export interface Datum {
+export interface IProject {
     id:          number;
     title:       string;
     description: string;
@@ -28,6 +28,6 @@ export interface Metadata {
     totalItems:   number;
     itemCount:    number;
     itemsPerPage: number;
-    totalPages:   number;
+    totalPages:   number;   
     currentPage:  number;
 }

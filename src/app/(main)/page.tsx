@@ -1,46 +1,75 @@
-"use client";
+import { Button } from "@mui/joy";
 import Link from "next/link";
-import { Button } from "../ui/atoms/button";
 
-export default function Component() {
+export default function Main() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white">
-      <nav className="flex justify-between items-center px-6 py-4">
-        <Link href="/" className="text-blue-600 text-xl font-semibold">
-          VolunteerConnect
-        </Link>
-        <div className="flex gap-4">
-          <Button variant="ghost" asChild>
-            <Link href="/login">Iniciar sesión</Link>
-          </Button>
-          <Button
-            variant="default"
-            className="bg-black text-white hover:bg-gray-800"
-            asChild
-          >
-            <Link href="/register">Registrarse</Link>
-          </Button>
+    <div className="min-h-screen flex flex-col main-background  bg-gradient-to-b from-blue-200 to-white">
+      <header className="p-7 flex justify-between items-center ">
+        <div className="flex items-center space-x-4">
+          <h1 className="text-2xl font-bold text-blue-700">
+            VolunteerConecct.
+          </h1>
         </div>
-      </nav>
+        <div className="flex gap-2 ">
+          <Link href="/login">
+            <Button sx={{ color: "black", fontSize: "1em" }} variant="plain">
+              Iniciar sesión
+            </Button>
+          </Link>
+          <Link href="/#">
+            <Button
+              sx={{
+                color: "white",
+                bgcolor: "black",
+                fontSize: "1em",
+                "&: hover": {
+                  backgroundColor: "black",
+                },
+              }}
+              variant="solid"
+            >
+              {" "}
+              Registrarse{" "}
+            </Button>
+          </Link>
+        </div>
+      </header>
 
-      <main className="container mx-auto px-6 py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          Conecta, Colabora, Cambia el Mundo
+      {/* Main Content */}
+      <main className="flex-grow w-full flex flex-col items-center mt-32 p-4 gap-6">
+        <h1 className="font-bold text-[3em]">
+          Conecta, Colabora, Cambia el mundo{" "}
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+        <p className="w-[40%] text-[1.2em] flex text-center ">
           Únete a nuestra comunidad de voluntarios y organizadores. Encuentra
-          proyectos que te apasionen o creá los tuyos propios para hacer una
+          proyectos que te apacionen o crea los tuyos propios para hacer una
           diferencia en tu comunidad.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex gap-4">
           <Button
-            className="bg-black text-white hover:bg-gray-800 text-lg px-8 py-6"
-            asChild
+            size="lg"
+            sx={{
+              bgcolor: "black",
+              "&: hover": {
+                backgroundColor: "black",
+              },
+            }}
           >
-            <Link href="/projects">Explorar Proyectos</Link>
+            
+            Explora Proyectos
           </Button>
-          <Button variant="outline" className="text-lg px-8 py-6" asChild>
-            <Link href="/register-org">Comenzar como Organizador</Link>
+          <Button
+            size="lg"
+            sx={{
+              bgcolor: "white",
+              color: "black",
+              "&: hover": {
+                backgroundColor: "white",
+              },
+            }}
+          >
+            
+            Comenzar como organizador
           </Button>
         </div>
       </main>
